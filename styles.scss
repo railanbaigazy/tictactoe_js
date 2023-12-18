@@ -1,0 +1,202 @@
+$cellSize: 100px;
+$markSize: $cellSize * .9;
+$colors : (
+  primary: #f0f6f0,
+  secondary: #222323,
+  lighter: #a3a7a3
+);
+
+@mixin cellX {
+  content: '';
+  position: absolute;
+  width: $markSize * .15;
+  height: $markSize;
+  background-color: map-get($colors, primary);
+  opacity: 1;
+}
+@mixin cellXBefore {
+  transform: rotate(45deg);
+}
+@mixin cellXAfter {
+  transform: rotate(-45deg);
+}
+
+@mixin cellO {
+  width: $markSize * .9;
+  height: $markSize * .9;
+  content: '';
+  position: absolute;
+  border: 15px solid map-get($colors, primary);
+  border-radius: 50%;
+  background-color: transparent;
+  opacity: 1;
+}
+
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  //background: linear-gradient(315deg, rgba(141,105,122,1) 0%, rgba(255,170,94,1) 63%, rgba(255,236,214,1) 100%);
+  background: map-get($colors, secondary);
+}
+
+.board {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(3, auto);
+
+  .cell {
+    width: $cellSize;
+    height: $cellSize;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid map-get($colors, lighter);
+    cursor: pointer;
+    @for $i from 1 through 9 {
+      @if ($i <= 3) {
+        &:nth-child(#{$i}) {
+          border-top: none;
+        }
+      }
+      @else if $i >= 7 {
+        &:nth-child(#{$i}) {
+          border-bottom: none;
+        }
+      }
+      @else if $i == 5 {
+        &:nth-child(5) {
+          border-top: none;
+          border-bottom: none;
+        }
+      }
+      @else {
+        &:nth-child(#{$i}) {
+          border: none;
+        }
+      }
+    }
+
+    &:nth-child(3n + 1) {
+      border-left: none;
+      border-right: none;
+    }
+
+    &:nth-child(3n + 3) {
+      border-right: none;
+      border-left: none;
+    }
+    &.x, &.o {
+      cursor: not-allowed;
+    }
+    &.x {
+      &::before,
+      &::after {
+        @include cellX;
+      }
+
+      &::before {
+        @include cellXBefore;
+      }
+      &::after {
+        @include cellXAfter;
+      }
+    }
+
+    &.o {
+      &::after {
+        @include cellO;
+      }
+    }
+  }
+  &.x {
+    .cell:not(.x):not(.o):hover {
+      &::before,
+      &::after {
+        @include cellX;
+        opacity: .5;
+      }
+
+      &::before {
+        @include cellXBefore;
+      }
+      &::after {
+        @include cellXAfter;
+      }
+    }
+  }
+  &.o {
+    .cell:not(.x):not(.o):hover {
+      &::after {
+        @include cellO;
+        opacity: .5;
+      }
+    }
+  }
+}
+
+.message {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(0, 0, 0, .8);
+  align-items: center;
+  justify-content: center;
+  color: map-get($colors, primary);
+  font-size: 8rem;
+  flex-direction: column;
+  text-transform: uppercase;
+  font-family: 'Courier New', monospace;
+
+  &.show {
+    display: flex;
+  }
+
+  .restart-button {
+    text-transform: uppercase;
+    font-family: 'Courier New', monospace;
+    font-size: 2rem;
+    background-color: map-get($colors, primary);
+    color: map-get($colors, secondary);
+    padding: .25em .5em;
+    cursor: pointer;
+    margin-top: 30px;
+    border: 5px solid map-get($colors, secondary);
+
+    &:hover {
+      background-color: map-get($colors, secondary);
+      color: map-get($colors, primary);
+      border-color: map-get($colors, primary);;
+    }
+  }
+}
+
+.ring {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    border: 10px solid #000;
+    border-radius: 50%;
+    background-color: transparent;
+  }
+
+}
+

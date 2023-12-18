@@ -1,0 +1,173 @@
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #222323;
+}
+
+.board {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: repeat(3, auto);
+}
+.board .cell {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid #a3a7a3;
+  cursor: pointer;
+}
+.board .cell:nth-child(1) {
+  border-top: none;
+}
+.board .cell:nth-child(2) {
+  border-top: none;
+}
+.board .cell:nth-child(3) {
+  border-top: none;
+}
+.board .cell:nth-child(4) {
+  border: none;
+}
+.board .cell:nth-child(5) {
+  border-top: none;
+  border-bottom: none;
+}
+.board .cell:nth-child(6) {
+  border: none;
+}
+.board .cell:nth-child(7) {
+  border-bottom: none;
+}
+.board .cell:nth-child(8) {
+  border-bottom: none;
+}
+.board .cell:nth-child(9) {
+  border-bottom: none;
+}
+.board .cell:nth-child(3n+1) {
+  border-left: none;
+  border-right: none;
+}
+.board .cell:nth-child(3n+3) {
+  border-right: none;
+  border-left: none;
+}
+.board .cell.x, .board .cell.o {
+  cursor: not-allowed;
+}
+.board .cell.x::before, .board .cell.x::after {
+  content: "";
+  position: absolute;
+  width: 13.5px;
+  height: 90px;
+  background-color: #f0f6f0;
+  opacity: 1;
+}
+.board .cell.x::before {
+  transform: rotate(45deg);
+}
+.board .cell.x::after {
+  transform: rotate(-45deg);
+}
+.board .cell.o::after {
+  width: 81px;
+  height: 81px;
+  content: "";
+  position: absolute;
+  border: 15px solid #f0f6f0;
+  border-radius: 50%;
+  background-color: transparent;
+  opacity: 1;
+}
+.board.x .cell:not(.x):not(.o):hover::before, .board.x .cell:not(.x):not(.o):hover::after {
+  content: "";
+  position: absolute;
+  width: 13.5px;
+  height: 90px;
+  background-color: #f0f6f0;
+  opacity: 1;
+  opacity: 0.5;
+}
+.board.x .cell:not(.x):not(.o):hover::before {
+  transform: rotate(45deg);
+}
+.board.x .cell:not(.x):not(.o):hover::after {
+  transform: rotate(-45deg);
+}
+.board.o .cell:not(.x):not(.o):hover::after {
+  width: 81px;
+  height: 81px;
+  content: "";
+  position: absolute;
+  border: 15px solid #f0f6f0;
+  border-radius: 50%;
+  background-color: transparent;
+  opacity: 1;
+  opacity: 0.5;
+}
+
+.message {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  align-items: center;
+  justify-content: center;
+  color: #f0f6f0;
+  font-size: 8rem;
+  flex-direction: column;
+  text-transform: uppercase;
+  font-family: "Courier New", monospace;
+}
+.message.show {
+  display: flex;
+}
+.message .restart-button {
+  text-transform: uppercase;
+  font-family: "Courier New", monospace;
+  font-size: 2rem;
+  background-color: #f0f6f0;
+  color: #222323;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+  margin-top: 30px;
+  border: 5px solid #222323;
+}
+.message .restart-button:hover {
+  background-color: #222323;
+  color: #f0f6f0;
+  border-color: #f0f6f0;
+}
+
+.ring {
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+.ring::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  border: 10px solid #000;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+/*# sourceMappingURL=styles.css.map */
